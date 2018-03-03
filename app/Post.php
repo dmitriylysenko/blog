@@ -103,6 +103,9 @@ class Post extends Model
 
     }
 
+    /**
+     * @return string
+     */
     public function getImage()
     {
         if ($this->image == null) {
