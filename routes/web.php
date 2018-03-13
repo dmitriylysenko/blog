@@ -15,5 +15,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('toys', 'ToysController@index');
-Route::get('toys/create', 'ToysController@create');
+Route::get('/admin', 'Admin\DashboardController@index');
