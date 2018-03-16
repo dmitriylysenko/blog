@@ -16,8 +16,14 @@ class Category extends Model
 {
     use Sluggable;
 
+    /**
+     * @var array
+     */
     protected $fillable = ['title'];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function posts()
     {
         return $this->hasMany(Post::class);

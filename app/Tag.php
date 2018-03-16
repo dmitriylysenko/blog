@@ -16,6 +16,14 @@ class Tag extends Model
 {
     use Sluggable;
 
+    /**
+     * @var array
+     */
+    protected $fillable = ['title'];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function posts()
     {
         return $this->belongsToMany(
