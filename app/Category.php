@@ -5,9 +5,18 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 
+/**
+ * App\Category
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Post[] $posts
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Category findSimilarSlugs($attribute, $config, $slug)
+ * @mixin \Eloquent
+ */
 class Category extends Model
 {
     use Sluggable;
+
+    protected $fillable = ['title'];
 
     public function posts()
     {

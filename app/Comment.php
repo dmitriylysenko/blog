@@ -4,6 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Comment
+ *
+ * @property-read \App\User $author
+ * @property-read \App\Post $post
+ * @mixin \Eloquent
+ */
 class Comment extends Model
 {
     public function post()

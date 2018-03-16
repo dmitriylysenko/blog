@@ -5,6 +5,13 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 
+/**
+ * App\Tag
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Post[] $posts
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Tag findSimilarSlugs($attribute, $config, $slug)
+ * @mixin \Eloquent
+ */
 class Tag extends Model
 {
     use Sluggable;

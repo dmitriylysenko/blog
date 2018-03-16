@@ -7,11 +7,18 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Support\Facades\Storage;
 
 /**
+ * App\Post
+ *
  * @property int user_id
  * @property mixed image
  * @property int category_id
  * @property int status
  * @property int is_featured
+ * @property-read \App\User $author
+ * @property-read \App\Category $category
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Tag[] $tags
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Post findSimilarSlugs($attribute, $config, $slug)
+ * @mixin \Eloquent
  */
 class Post extends Model
 {
