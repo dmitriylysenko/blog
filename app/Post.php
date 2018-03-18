@@ -9,16 +9,34 @@ use Illuminate\Support\Facades\Storage;
 /**
  * App\Post
  *
- * @property int user_id
  * @property mixed image
- * @property int category_id
- * @property int status
- * @property int is_featured
  * @property-read \App\User $author
  * @property-read \App\Category $category
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Tag[] $tags
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Post findSimilarSlugs($attribute, $config, $slug)
  * @mixin \Eloquent
+ * @property int $id
+ * @property string $title
+ * @property string $slug
+ * @property string $content
+ * @property int|null $category_id
+ * @property int|null $user_id
+ * @property int $status
+ * @property int $views
+ * @property int $is_featured
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereCategoryId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereContent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereIsFeatured($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereViews($value)
  */
 class Post extends Model
 {
