@@ -8,12 +8,11 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="/css/admin.css">
     <style>
-        table.table form
-        {
+        table.table form {
             display: inline-block;
         }
-        button.delete
-        {
+
+        button.delete {
             background: transparent;
             border-right: none;
             color: #337ab7;
@@ -221,9 +220,10 @@
                         <i class="fa fa-dashboard"></i> <span>Админ-панель</span>
                     </a>
                 </li>
-                <li><a href="#"><i class="fa fa-sticky-note-o"></i> <span>Посты</span></a></li>
-                <li><a href="#"><i class="fa fa-list-ul"></i> <span>Категории</span></a></li>
-                <li><a href="#"><i class="fa fa-tags"></i> <span>Теги</span></a></li>
+                <li><a href="{{route('posts.index')}}"><i class="fa fa-sticky-note-o"></i> <span>Посты</span></a></li>
+                <li><a href="{{route('categories.index')}}"><i class="fa fa-list-ul"></i> <span>Категории</span></a>
+                </li>
+                <li><a href="{{route('tags.index')}}"><i class="fa fa-tags"></i> <span>Теги</span></a></li>
                 <li>
                     <a href="#">
                         <i class="fa fa-commenting"></i> <span>Комментарии</span>
@@ -232,7 +232,7 @@
             </span>
                     </a>
                 </li>
-                <li><a href="#"><i class="fa fa-users"></i> <span>Пользователи</span></a></li>
+                <li><a href="{{route('users.index')}}"><i class="fa fa-users"></i> <span>Пользователи</span></a></li>
                 <li><a href="#"><i class="fa fa-user-plus"></i> <span>Подписчики</span></a></li>
 
             </ul>
@@ -451,6 +451,14 @@
 </div>
 <!-- ./wrapper -->
 <script src="/js/admin.js"></script>
+<script src="/plugins/ckeditor/ckeditor.js"></script>
+<script src="/plugins/ckfinder/ckfinder.js"></script>
+<script>
+    $(function () {
+        var editor = CKEDITOR.replaceAll();
+        CKFinder.setupCKEditor(editor);
+    })
+</script>
 
 </body>
 

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Support\Facades\Storage;
@@ -9,7 +10,6 @@ use Illuminate\Support\Facades\Storage;
 /**
  * App\Post
  *
- * @property mixed image
  * @property-read \App\User $author
  * @property-read \App\Category $category
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Tag[] $tags
@@ -24,6 +24,8 @@ use Illuminate\Support\Facades\Storage;
  * @property int $status
  * @property int $views
  * @property int $is_featured
+ * @property string $date
+ * @property string|null $image
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereCategoryId($value)
@@ -37,6 +39,8 @@ use Illuminate\Support\Facades\Storage;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereViews($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereImage($value)
  */
 class Post extends Model
 {
@@ -45,16 +49,16 @@ class Post extends Model
     const IS_DRAFT = 0;
     const IS_PUBLIC = 1;
 
-    protected $fillable = ['title', 'content'];
+    protected $fillable = ['title', 'content', 'date'];
 
     public function category()
     {
-        return $this->hasOne(Category::class);
+        return $this->belongsTo(Category::class);
     }
 
     public function author()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function tags()
@@ -108,7 +112,7 @@ class Post extends Model
      */
     public function remove()
     {
-        Storage::delete('uploads/', $this->image);
+        $this->removeImage();
         $this->delete();
     }
 
@@ -120,12 +124,19 @@ class Post extends Model
         if ($image == null) {
             return;
         }
-        Storage::delete('uploads/', $this->image);
+        $this->removeImage();
         $filename = str_random(10) . '.' . $image->extension();
-        $image->saveAs('uploads', $filename);
+        $image->storeAs('uploads', $filename);
         $this->image = $filename;
         $this->save();
 
+    }
+
+    public function removeImage()
+    {
+        if ($this->image != null) {
+            Storage::delete('uploads/', $this->image);
+        }
     }
 
     /**
@@ -207,5 +218,38 @@ class Post extends Model
             return $this->setStandart();
         }
         return $this->setFeatured();
+    }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    public function getDateAttribute($value)
+    {
+        $date = Carbon::createFromFormat('Y-m-d', $value)->format('d/m/y');
+        return $date;
+    }
+
+    /**
+     * @param $value
+     */
+    public function setDateAttribute($value)
+    {
+        $date = Carbon::createFromFormat('d/m/y', $value)->format('Y-m-d');
+        $this->attributes['date'] = $date;
+    }
+
+    public function getCategoryTitle()
+    {
+        return ($this->category != null) ?
+            $this->category->title :
+            'Нет категории';
+    }
+
+    public function getTagsTitles()
+    {
+        return ($this->tags->isNotEmpty()) ?
+            implode(', ', $this->tags->pluck('title')->all()) :
+            'Нет категории';
     }
 }
