@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Storage;
  * @property string $title
  * @property string $slug
  * @property string $content
+ * @property string $description
  * @property int|null $category_id
  * @property int|null $user_id
  * @property int $status
@@ -49,18 +50,27 @@ class Post extends Model
     const IS_DRAFT = 0;
     const IS_PUBLIC = 1;
 
-    protected $fillable = ['title', 'content', 'date'];
+    protected $fillable = ['title', 'content', 'date', 'description'];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function category()
     {
         return $this->belongsTo(Category::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function author()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function tags()
     {
         return $this->belongsToMany(
@@ -197,12 +207,18 @@ class Post extends Model
         return $this->setPublic();
     }
 
+    /**
+     *
+     */
     public function setFeatured()
     {
         $this->is_featured = 1;
         $this->save();
     }
 
+    /**
+     *
+     */
     public function setStandart()
     {
         $this->is_featured = 0;
@@ -239,6 +255,9 @@ class Post extends Model
         $this->attributes['date'] = $date;
     }
 
+    /**
+     * @return string
+     */
     public function getCategoryTitle()
     {
         return ($this->category != null) ?
@@ -246,10 +265,29 @@ class Post extends Model
             'Нет категории';
     }
 
+    /**
+     * @return string
+     */
     public function getTagsTitles()
     {
         return ($this->tags->isNotEmpty()) ?
             implode(', ', $this->tags->pluck('title')->all()) :
             'Нет категории';
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getCategoryId()
+    {
+        return ($this->category != null) ? $this->category->id : null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDate()
+    {
+        return Carbon::createFromFormat('d/m/y', $this->date)->format('F d, Y');
     }
 }
