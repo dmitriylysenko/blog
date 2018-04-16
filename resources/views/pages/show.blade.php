@@ -85,13 +85,13 @@
                         </div>
                         <div class="items">
                             @foreach($post->related() as $item)
-                            <div class="single-item">
-                                <a href="{{route('post.show', $item->slug)}}">
-                                    <img src="{{$item->getImage()}}" alt="">
-                                    <p>{{$item->title}}</p>
-                                </a>
-                            </div>
-                        @endforeach
+                                <div class="single-item">
+                                    <a href="{{route('post.show', $item->slug)}}">
+                                        <img src="{{$item->getImage()}}" alt="">
+                                        <p>{{$item->title}}</p>
+                                    </a>
+                                </div>
+                            @endforeach
                         </div>
                     </div><!--related post carousel-->
                     <div class="bottom-comment"><!--bottom comment-->
