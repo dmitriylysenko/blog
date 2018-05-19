@@ -69,6 +69,14 @@ class Post extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function tags()
@@ -364,5 +372,13 @@ class Post extends Model
     public static function getRecentPosts()
     {
         return self::orderBy('date', 'desc')->take(4)->get();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getComments()
+    {
+        return $this->comments()->where('status', 1)->get();
     }
 }
