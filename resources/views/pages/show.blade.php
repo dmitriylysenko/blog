@@ -6,9 +6,6 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8">
-                    @if(session('status'))
-                        <div class="alert alert-success">{{session('status')}}</div>
-                    @endif
                     <article class="post">
                         <div class="post-thumb">
                             <a href="{{route('post.show', $post->slug)}}"><img src="{{$post->getImage()}}" alt=""></a>
@@ -103,7 +100,7 @@
                             <div class="bottom-comment"><!--bottom comment-->
                                 <div class="comment-img">
                                     <img class="img-circle" src="{{$comment->author->getAvatar()}}" alt=""
-                                    width="100" height="100">
+                                         width="100" height="100">
                                 </div>
 
                                 <div class="comment-text">
